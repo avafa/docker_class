@@ -1,0 +1,23 @@
+docker-machine create -d virtualbox local
+eval "$(docker-machine env local)"
+
+
+docker run swarm create
+b0db8a00b751d70a3670e9d1bc2792de
+
+swarm-master
+docker-machine create  -d virtualbox --swarm --swarm-master --swarm-discovery token://b0db8a00b751d70a3670e9d1bc2792de swarm-master
+
+node1
+docker-machine create -d virtualbox --swarm --swarm-discovery token://b0db8a00b751d70a3670e9d1bc2792de swarm-node01
+
+node02
+docker-machine create -d virtualbox --swarm --swarm-discovery token://b0db8a00b751d70a3670e9d1bc2792de swarm-node02
+
+eval $(docker-machine env --swarm swarm-master)
+
+**all docker commands work from here
+docker run hello-world
+
+docker ps -a
+docker info
