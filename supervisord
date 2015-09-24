@@ -15,8 +15,14 @@ nodaemon=true
 [program:nginx]
 command=nginx -g dameon off
 
+nginx.repo
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/rhel/$releasever/$basearch/
+gpgcheck=0
+enabled=1
 
-Starting Docker File:
+Final Docker File:
 # Version: 0.0.1
 FROM centos
 LABEL type="Webserver" location="MA"
