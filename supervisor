@@ -1,0 +1,18 @@
+Running multiple processes in a container at start with supervisor
+**add to simple nginx project
+
+Dockerfile (add these)
+RUN yum install -y python-setuptools
+RUN easy_install supervisor
+RUN mkdir -p /etc/supervisord/
+COPY supervisord.conf /etc/supervisord/
+CMD ["/usr/bin/supervisord","-c","/etc/supervisord/supervisord.conf"]
+
+supervirsord.conf
+[supervisord]
+nodaemon=true
+
+[program:nginx]
+command=nginx -g dameon off
+
+
