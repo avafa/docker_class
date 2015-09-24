@@ -1,0 +1,46 @@
+in /usr/local/bin
+wget --no-check-certificate https://github.com/docker/compose/releases/download/1.4.1/docker-compose-`uname -s`-`uname -m`
+
+sudo mv docker-compose-`uname -s`-`uname -m` /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+docker-compose --version
+
+docker-compose.yml
+web:
+  build: .
+  command: python app.py
+  ports:
+   - "5000:5000"
+  volumes:
+   - .:/code
+  links:
+   - redis
+redis:
+  image: redis
+  
+Dockerfile
+FROM python:2.7
+ADD . /code
+WORKDIR /code
+RUN pip install -r requirements.txt
+
+app.py
+from flask import Flask
+from redis import Redis
+import os
+app = Flask(__name__)
+redis = Redis(host='redis', port=6379)
+
+@app.route('/')
+def hello():
+    redis.incr('hits')
+    return 'Hello World! I have been seen %s times.' % redis.get('hits')
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)
+    
+requirements.txt
+flask
+redis
