@@ -1,0 +1,9 @@
+docker run -t -i --name db ubuntu /bin/bash
+
+docker run -t -i --link db:db --name web1 ubuntu /bin/bash
+
+ctrl +p ctrl + q
+
+docker attach <container>
+
+multi-host linking https://docs.docker.com/articles/ambassador_pattern_linking/
