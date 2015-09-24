@@ -18,14 +18,18 @@ command=nginx -g dameon off
 
 Starting Docker File:
 # Version: 0.0.1
-FROM ubuntu
+FROM centos
 LABEL type="Webserver" location="MA"
 MAINTAINER John Kidd "jkidd@kiddcorp.com"
 ENV DOC_ROOT /usr/share/nginx/html/
 ENV REFRESHED_AT 2015-09-20
-RUN apt-get update && apt-get install -y nginx
+COPY nginx.repo /etc/yum.repos.d/
+#RUN apt-get update && apt-get install -y nginx
+RUN yum -y update; yum clean all; yum install -y nginx
 RUN echo 'Hello Docker Container' > $DOC_ROOT/index.html
-#COPY ./content/page.html $DOC_ROOT
-WORKDIR /usr/sbin
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+RUN yum install -y python-setuptools
+RUN easy_install supervisor
+RUN mkdir -p /etc/supervisord/
+COPY supervisord.conf /etc/supervisord/
+CMD ["/usr/bin/supervisord","-c","/etc/supervisord/supervisord.conf"]
 EXPOSE 80
