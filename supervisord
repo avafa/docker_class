@@ -1,5 +1,5 @@
 Running multiple processes in a container at start with supervisor
-**add to simple nginx project
+**add to static_web project
 
 Dockerfile (add these)
 RUN yum install -y python-setuptools
@@ -16,3 +16,16 @@ nodaemon=true
 command=nginx -g dameon off
 
 
+Starting Docker File:
+# Version: 0.0.1
+FROM ubuntu
+LABEL type="Webserver" location="MA"
+MAINTAINER John Kidd "jkidd@kiddcorp.com"
+ENV DOC_ROOT /usr/share/nginx/html/
+ENV REFRESHED_AT 2015-09-20
+RUN apt-get update && apt-get install -y nginx
+RUN echo 'Hello Docker Container' > $DOC_ROOT/index.html
+#COPY ./content/page.html $DOC_ROOT
+WORKDIR /usr/sbin
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+EXPOSE 80
