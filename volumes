@@ -2,7 +2,7 @@ docker run -v /dbdata -t -i --name dbdata ubuntu /bin/bash
 touch /dbdata/data.ex
 exit
 
-docker run --volumes-from dbdata --name -t -i ubuntu db1 /bin/bash
+docker run --volumes-from dbdata --name db1 -t -i ubuntu  /bin/bash
 ls /dbdata
 touch /dbdata/data2.ex
 
