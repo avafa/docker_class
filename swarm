@@ -3,16 +3,16 @@ eval "$(docker-machine env local)"
 
 
 docker run swarm create
-fab4e81e210fd4a52fef35baab256fb9
+2e740040d21b57dad4962522711b847d
 
 swarm-master
-docker-machine create  -d virtualbox --swarm --swarm-master --swarm-discovery token://fab4e81e210fd4a52fef35baab256fb9 swarm-master
+docker-machine create  -d virtualbox --swarm --swarm-master --swarm-discovery token://2e740040d21b57dad4962522711b847d swarm-master
 
 node1
-docker-machine create -d virtualbox --swarm --swarm-discovery token://fab4e81e210fd4a52fef35baab256fb9 swarm-node01
+docker-machine create -d virtualbox --swarm --swarm-discovery token://2e740040d21b57dad4962522711b847d swarm-node01
 
 node02
-docker-machine create -d virtualbox --swarm --swarm-discovery token://fab4e81e210fd4a52fef35baab256fb9 swarm-node02
+docker-machine create -d virtualbox --swarm --swarm-discovery token://2e740040d21b57dad4962522711b847d swarm-node02
 
 eval $(docker-machine env --swarm swarm-master)
 
@@ -21,7 +21,7 @@ docker run hello-world
 
 docker ps -a
 docker info
-docker run --rm swarm list token://fab4e81e210fd4a52fef35baab256fb9
+docker run --rm swarm list token://2e740040d21b57dad4962522711b847d
 
 for i in `seq 1 6`; do docker run -d --name www-$i -p 80 nginx;done
 for i in `seq 1 6`; do docker run -d --name www-$i -p 8$i:80 nginx;done
